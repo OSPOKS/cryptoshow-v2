@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cryptocurrency Live Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+    .chart-container {
+      background-color: #333;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+    .chart-legend li span {
+      color: #fff;
+    }
+    .chart-price {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .chart-price span {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .doge-price {
+      color: #c2a633;
+    }
+    .btc-price {
+      color: #f7931a;
+    }
+    .eth-price {
+      color: #627eea;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cryptocurrency Live Charts</h1>
+
+  <div class="chart-container">
+    <canvas id="doge-chart"></canvas>
+    <div class="chart-price doge-price">
+      <span>DOGE:</span>
+      <span id="doge-price"></span>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="btc-chart"></canvas>
+    <div class="chart-price btc-price">
+      <span>BTC:</span>
+      <span id="btc-price"></span>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="eth-chart"></canvas>
+    <div class="chart-price eth-price">
+      <span>ETH:</span>
+      <span id="eth-price"></span>
+    </div>
+  </div>
+
+  <script>
+    // get the chart canvases
+    var dogeCanvas = document.getElementById('doge-chart');
+    var btcCanvas = document.getElementById('btc-chart');
+    var ethCanvas = document.getElementById('eth-chart');
+
+    // initialize the charts
+    var dogeChart = new Chart(dogeCanvas, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'DOGE',
+          data: [],
+          borderColor: '#c2a633',
+          backgroundColor: 'rgba(0, 0, 0, 0)'
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              display: false
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontColor: '#fff'
+            }
+          }]
+        }
+      }
+    });
+
+    var btcChart = new Chart(btcCanvas, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'BTC',
+          data: [],
+          borderColor: '#f7931a',
+          backgroundColor: 'rgba(0, 0, 0, 0)'
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              display: false
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontColor: '#fff'
+            }
+          }]
+        }
+      }
+    });
+
+    var ethChart = new Chart(ethCanvas, {
+      type: 'line',
+     
