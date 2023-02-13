@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cryptocurrency Charts</title>
+    <style>
+      #chart-container {
+        display: flex;
+        flex-direction: row;
+        height: 500px;
+      }
+
+      #price-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+        height: 500px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      
+      #price-container span {
+        display: block;
+      }
+
+      canvas {
+        flex: 1;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div id="chart-container">
+      <canvas id="doge-chart"></canvas>
+      <canvas id="btc-chart"></canvas>
+      <canvas id="eth-chart"></canvas>
+    </div>
+    <div id="price-container">
+      <span id="doge-price"></span>
+      <span id="btc-price"></span>
+      <span id="eth-price"></span>
+    </div>
+    <script>
+      const dogePrice = document.getElementById('doge-price');
+      const btcPrice = document.getElementById('btc-price');
+      const ethPrice = document.getElementById('eth-price');
+      
+      const dogeChart = new Chart(document.getElementById('doge-chart'), {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{
+            label: 'Dogecoin',
+            data: [],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            fill: false,
+          }]
+        },
+        options: {
+          animation: false,
+          scales: {
+            xAxes: [{
+              type: 'realtime',
+              display: true,
+            }],
+            yAxes: [{
+              type: 'linear',
+              display: true,
+              ticks: {
+                callback: (value) => `$${value}`
+              }
+            }]
+          },
+          plugins: {
+            streaming: {
+              duration: 20000,
+              delay: 1000,
+              frameRate: 30,
+              refresh: 1000,
+              onRefresh: (chart) => {
+                const time = new Date().toLocaleTimeString();
+                const dogeData = {
+                  x: Date.now(),
+                  y: Math.random() * 0.1 + 0.04 // simulate Dogecoin price fluctuation
+                };
+                chart.data.labels.push(time);
+                chart.data.datasets[0].data.push(dogeData);
+                chart.update();
+                dogePrice.textContent = `$${dogeData.y.toFixed(4)}`;
+              }
+            }
+          }
+        }
+      });
+
+      const btcChart = new Chart(document.getElementById('btc-chart'), {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{
+            label: 'Bitcoin',
+            data: [],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            fill: false,
+          }]
+        },
+        options: {
+          animation: false,
+          scales: {
+            xAxes: [{
+              type: 'realtime',
+              display: true,
+            }],
+           
