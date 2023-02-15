@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Crypto and Currency Rates</title>
+</head>
+<body>
+    <h1>Live Crypto and Currency Rates</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Cryptocurrency</th>
+                <th>Currency</th>
+                <th>Rate</th>
+            </tr>
+        </thead>
+        <tbody id="rates-table"></tbody>
+    </table>
+    <script>
+        // Replace YOUR_APP_ID with your actual App ID from Open Exchange Rates API
+        const APP_ID = "d35b7a6fbdcb43528f98000657f8af94";
+
+        // Define the currencies and cryptocurrencies to display rates for
+        const currencies = ["USD", "EUR", "INR", "SAR"];
+        const cryptocurrencies = ["BTC", "DOGE", "ETH", "SHIB"];
+
+        // Build the API URL with the currencies and cryptocurrencies
+        const url = `https://openexchangerates.org/api/latest.json?app_id=${APP_ID}&symbols=${currencies.join(",")}&base=USD`;
+
+        // Fetch the exchange rates from the API
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // Create an object with the rates for each cryptocurrency
+                const rates = {};
+                cryptocurrencies.forEach(crypto => {
+                    rates[crypto] = data[`USD${crypto}`];
+                });
+
+                // Create a row for each currency and cryptocurrency combination
+                currencies.forEach(currency => {
+                    const row = document.createElement("tr");
+                    const currencyCell = document.createElement("td");
+                    currencyCell.textContent = currency;
+                    row.appendChild(currencyCell);
+
+                    cryptocurrencies.forEach(crypto => {
+                        const rateCell = document.createElement("td");
+                        rateCell.textContent = rates[crypto][currency].toFixed(4);
+                        row.appendChild(rateCell);
+                    });
+
+                    document.getElementById("rates-table").appendChild(row);
+                });
+            })
+            .catch(error => console.log(error));
+    </script>
+</body>
+</html>
